@@ -20,3 +20,6 @@ const makeCSV = async function () {
   await new ObjectsToCSV(fakeUsers).toDisk('./csvFolder/lorem.csv', { append: true });
 };
 makeCSV();
+
+// CREATE INDEX titleIndex ON description(title);
+// SELECT pg_size_pretty( pg_database_size('description') );

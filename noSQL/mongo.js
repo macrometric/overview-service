@@ -25,34 +25,22 @@ const createFakeDesc = (id) => new Description({
   rating: faker.random.number(4) + 1,
 });
 
-const seedDescDatabase = async () => {
-  let absouluteLimit = 10000000
-  // let currStart = 0
-  // let currLimit = 100000
-  // while (currLimit < absouluteLimit) {
-  // let descArr = [];
-  for (let i = 0; i < absouluteLimit; i++) {
-    // descArr.push(createFakeDesc(i));
-    await createFakeDesc(i).save().then(data => {
+//super slow way
+//const seedDescDatabase = async () => {
+  //let absouluteLimit = 10000000
 
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-  // Description.collection.insert(descArr, (err, res) => {
-  //   if (err) {
-  //     //handle err
-  //   } else {
-  //     console.log(`${currLimit} Descriptions were successfully stored.`);
-  //   }
-  // });
-  //   currStart += 100000;
-  //   currLimit += 100000;
-  // }
-}
-seedDescDatabase();
+  //for (let i = 0; i < absouluteLimit; i++) {
+    //await createFakeDesc(i).save().then(data => {
 
+    //}).catch(err => {
+      //console.log(err);
+    //});
+  //}
 
+//}
+//seedDescDatabase();
+
+//Example of insert
 /*
 var Potato = mongoose.model('Potato', PotatoSchema);
 

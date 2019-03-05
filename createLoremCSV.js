@@ -1,7 +1,7 @@
 const faker = require('faker');
 const ObjectsToCSV = require('objects-to-csv');
 
-const createFakeUser = (id) => ({
+const createFakeDesc = (id) => ({
   user_id: id,
   title: faker.commerce.productName(),
   description: faker.lorem.paragraphs(1),
@@ -13,11 +13,10 @@ const createFakeUser = (id) => ({
 const makeCSV = async function () {
   // Deletes ALL existing entries
   const fakeUsers = [];
-  const desiredFakeUsers = 100;
-  for (let i = 0; i < desiredFakeUsers; i++) {
-    fakeUsers.push(createFakeUser(i));
+  const desiredFakeUsers = 10000000;
+  for (let i = 9000000; i < desiredFakeUsers; i++) {
+    fakeUsers.push(createFakeDesc(i));
   }
   await new ObjectsToCSV(fakeUsers).toDisk('./csvFolder/lorem.csv', { append: true });
 };
 makeCSV();
-

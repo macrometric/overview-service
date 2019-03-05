@@ -1,3 +1,5 @@
 db/schema.sql
 node_modules/
 client/components/TempCart.jsx
+noSQL/mongo.csv
+csvFolder

@@ -15,33 +15,65 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/test', (req, res) => {
-  console.log('are we ehre?');
-
-  database.findByID
+  database.findByID(9999999)
     .then(data => {
-      console.log('data', data)
+      // console.log('data', data);
 
       res.status(200).send(data);
     })
     .catch(err => {
-      console.log('err', err)
+      // console.log('err', err)
 
+      res.status(500).send(err);
+    });
+});
+
+app.post('/productinfo', (req, res) => {
+  console.log(req.body);
+  item = req.body;
+  // res.status(200).send('great work!');
+  database.postItem(item)
+    .then(data => {
+      // console.log('data', data);
+
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      // console.log('err', err)
+
+      res.status(500).send(err);
+    });
+});
+
+app.put('/productinfo/:ID', (req, res) => {
+  let id = req.params.ID;
+  console.log(req.body);
+  item = req.body;
+  // res.status(200).send('great work!');
+  database.updateItem(id, item)
+    .then(data => {
+      console.log('data', data);
+      res.status(200).send(`item #${id} updated with the following information ${item}`);
+    })
+    .catch(err => {
+      console.log('error in PUT /productinfo/:ID', err)
       res.status(500).send(err);
     });
 });
 
 app.get('/productinfo/:ID', (req, res) => {
   let id = req.params.ID;
-  const cb = (err, results) => {
-    if (err) {
-      console.log('Error in get request!');
-      res.status(404).send();
-    } else {
-      console.log('Successful get request!');
-      res.status(200).send(results);
-    }
-  }
-  queryDB(cb, id);
+  database.findByID(id)
+    .then(data => {
+      // console.log('data', data);
+
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      // console.log('err', err)
+
+      res.status(500).send(err);
+    });
 });
 
 

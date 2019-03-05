@@ -7,11 +7,39 @@ const knex = require('knex')(config[environment]);
 const url = 'mongodb://localhost:27017/tenMillion';
 
 
-const findByID = knex("description")
-  .where({ user_id: 9999999 })
-  .catch(err => {
-    console.log('err', err);
-  });
+const findByID = (id) => {
+  return knex("description")
+    .where({ user_id: id })
+    .catch(err => {
+      console.log('err', err);
+    });
+}
+
+const postItem = (item) => {
+  return knex("description")
+    //.where({ user_id: id })
+    .insert(item)
+    .catch(err => {
+      console.log('err', err);
+    });
+}
+const deleteItem = (item) => {
+  return knex("description")
+    //.where({ user_id: id })
+
+    .catch(err => {
+      console.log('err', err);
+    });
+}
+const updateItem = (id, item) => {
+  console.log('item ', item);
+  return knex("description")
+    .where({ user_id: id })
+    .update(item)
+    .catch(err => {
+      console.log('err', err);
+    });
+}
 //Small Steel Soap
 
 // var findDocuments = function (db, callback) {
@@ -30,4 +58,4 @@ MongoClient.connect(url, (err, client) => {
   console.log("Connected correctly to server");
 });
 
-module.exports = { findByID };
+module.exports = { findByID, postItem, deleteItem, updateItem };

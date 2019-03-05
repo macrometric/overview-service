@@ -9,7 +9,6 @@ const createFakeDesc = (id) => ({
   rating: faker.random.number(4) + 1,
 });
 
-
 const makeCSV = async function () {
   // Deletes ALL existing entries
   const fakeUsers = [];

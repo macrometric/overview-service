@@ -53,10 +53,22 @@ app.put('/productinfo/:ID', (req, res) => {
   database.updateItem(id, item)
     .then(data => {
       console.log('data', data);
-      res.status(200).send(`item #${id} updated with the following information ${item}`);
+      res.status(200).send(`item #${id} updated`);
     })
     .catch(err => {
       console.log('error in PUT /productinfo/:ID', err)
+      res.status(500).send(err);
+    });
+});
+app.delete('/productinfo/:ID', (req, res) => {
+  let id = req.params.ID;
+  database.deleteItem(id)
+    .then(data => {
+      // console.log('data', data);
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      // console.log('err', err)
       res.status(500).send(err);
     });
 });

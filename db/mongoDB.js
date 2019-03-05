@@ -23,14 +23,15 @@ const postItem = (item) => {
       console.log('err', err);
     });
 }
-const deleteItem = (item) => {
+const deleteItem = (id) => {
   return knex("description")
-    //.where({ user_id: id })
-
+    .where({ user_id: id })
+    .del()
     .catch(err => {
       console.log('err', err);
     });
 }
+
 const updateItem = (id, item) => {
   console.log('item ', item);
   return knex("description")

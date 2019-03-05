@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3030;
 const router = express.Router();
-const database = require('../db/postgresDB');
+// const database = require('../db/postgresDB');
+const database = require('../db/mongoDB');
 
 app.use(express.static(__dirname + '/../public'));
 

@@ -1,0 +1,22 @@
+config:
+  target: 'http://localhost:3030'  # target site
+  phases:
+    - duration: 10 # time in seconds
+      arrivalRate: 1 # how many are made each seconds
+    - duration: 5 # time in seconds
+      arrivalRate: 1 # how many are made each seconds
+      rampto: 10
+    - duration: 10 # time in seconds
+      arrivalRate: 10 # how many are made each seconds
+    - duration: 5 # time in seconds
+      arrivalRate: 10 # how many are made each seconds
+      rampto: 100
+    - duration: 10 # time in seconds
+      arrivalRate: 100 # how many are made each seconds
+  defaults:
+    headers:
+      # x-my-service-auth: '987401838271002188298567' # header that is sent with each request
+scenarios: # different flows through the website
+  - flow:
+    - get:  # type of request
+        url: "/random"

@@ -17,7 +17,7 @@ class App extends React.Component {
       price: null,
       rating: null,
       cart: 0
-    } 
+    }
   }
   averageRating(arr) {
     let total = arr.reduce((acc, obj) => {
@@ -29,25 +29,41 @@ class App extends React.Component {
   getProductInfo(id, callb) {
     id ? id = id : id = this.state.id;
     axios.get(`/productinfo/${id}`)
-        .then((info) => {
-          const updatedState = {
-                  id: id,
-                  title: info.data.prods[0].title,
-                  descs: info.data.descs,
-                  price: info.data.prods[0].price,
-                  rating: this.averageRating(info.data.revs)
-                }
-                console.log('updatedState', updatedState);
-                // this.setState(updatedState);
-                if (callb) {
-                  callb(updatedState);
-                } 
-        }).catch((err) => {
-          console.log('Error in axios GET request', err)
-        })
+      .then((info) => {
+        const updatedState = {
+          id: id,
+          title: info.data.prods[0].title,
+          descs: info.data.descs,
+          price: info.data.prods[0].price,
+          rating: this.averageRating(info.data.revs)
+        }
+        console.log('updatedState', updatedState);
+        // this.setState(updatedState);
+        if (callb) {
+          callb(updatedState);
+        }
+      }).catch((err) => {
+        console.log('Error in axios GET request', err)
+      })
   }
   componentDidMount() {
-    function callb (state) {
+    let random = Math.floor(Math.random() * 10000000);
+    axios.get(`/productinfo/${random}`)
+      .then(results => {
+        let item = results.data[0];
+        let currDescs = item.description.split('.');
+        currDescs.pop();
+        // console.log(currDescs);
+        // console.log(item);
+        this.setState({
+          id: item.user_id,
+          title: item.title,
+          descs: currDescs,
+          price: item.price,
+          rating: item.rating
+        })
+      })
+    function callb(state) {
       this.setState(state);
     }
     window.addEventListener('updateProduct', event => {
@@ -55,27 +71,27 @@ class App extends React.Component {
     })
     this.getProductInfo(this.state.id, callb.bind(this));
   }
-    // componentDidUpdate(prevProps, prevState) {
-    //   function callb (state) {
-    //     this.setState(state);
-    //   }
-    //   if (this.state.id !== prevState) {
-    //     this.getProductInfo(this.state.id, callb);
-    //   }
-    // }
-  
+  // componentDidUpdate(prevProps, prevState) {
+  //   function callb (state) {
+  //     this.setState(state);
+  //   }
+  //   if (this.state.id !== prevState) {
+  //     this.getProductInfo(this.state.id, callb);
+  //   }
+  // }
+
   render() {
     if (this.state.title !== null) {
-    return (
-      <div className="flex-container">
-        {/* <TempCart /> */}
-        <Title title={this.state.title} />
-        <Rating rating={this.state.rating} />
-        <Description descriptions={this.state.descs} />
-        <Price price={this.state.price} />
-        <AddToCart /> 
-      </div>
-    )
+      return (
+        <div className="flex-container">
+          {/* <TempCart /> */}
+          <Title title={this.state.title} />
+          <Rating rating={this.state.rating} />
+          <Description descriptions={this.state.descs} />
+          <Price price={this.state.price} />
+          <AddToCart />
+        </div>
+      )
     } else {
       return (
         <div></div>
@@ -85,4 +101,4 @@ class App extends React.Component {
 }
 
 
-ReactDOM.render(<App/>, document.getElementById('product-overview'));
+ReactDOM.render(<App />, document.getElementById('product-overview'));

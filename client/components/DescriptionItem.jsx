@@ -1,8 +1,9 @@
 import React from 'react';
 
-const DescriptionItem = ({listVal}) => {
-   return (
-     <li className="desc-item">{listVal}</li>
-   )
+const DescriptionItem = ({ listVal }) => {
+  console.log({ listVal })
+  return (
+    <li className="desc-item">{listVal}</li>
+  )
 }
 export default DescriptionItem;

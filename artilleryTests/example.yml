@@ -1,0 +1,30 @@
+config:
+  target: "https://staging1.local"
+  phases:
+    - duration: 60 # phase 1 
+      arrivalRate: 5
+    - duration: 120 # phase 2
+      arrivalRate: 5 # start with 5 per second
+      rampTo: 50     # go to 50 per second
+    - duration: 600 # phase 3
+      arrivalRate: 50 # keep it at 50 per second
+  payload:
+    path: "keywords.csv"
+    fields:
+      - "keywords"
+scenarios:
+  - name: "Search and buy"  # A particular scenario
+    flow: # make a post request to search using a keyword from a set
+      - post: # make post request
+          url: "/search"  #where the post request is made to
+          body: "kw={{ keywords }}" #what is contained in the body of the request
+          capture:  # store response ids using JSON 
+            json: "$.results[0].id"  #check the given value
+            as: "id"  # this it the keyword the value will be stored under
+      - get: # then make a get request -- does it use the id we captured? maybe
+          url: "/details/{{ id }}" # at this address
+      - think: 3 # wait 3 seconds
+      - post:
+          url: "/cart" # make a post request to the cart
+          json:        # use the captured id
+            productId: "{{ id }}"

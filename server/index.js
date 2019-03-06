@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 //const { queryDB } = require('../db/index.js');
@@ -9,7 +10,7 @@ const database = require('../db/mongoDB');
 
 app.use(express.static(__dirname + '/../public'));
 
-console.log('I\'m running here PM2');
+// console.log('I\'m running here PM2');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -76,6 +77,21 @@ app.delete('/productinfo/:ID', (req, res) => {
 app.get('/productinfo/:ID', (req, res) => {
   let id = req.params.ID;
   database.findByID(id)
+    .then(data => {
+      // console.log('data', data);
+
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      // console.log('err', err)
+
+      res.status(500).send(err);
+    });
+});
+
+app.get('/random', (req, res) => {
+  let random = Math.floor(Math.random() * 10000000);
+  database.findByID(random)
     .then(data => {
       // console.log('data', data);
 

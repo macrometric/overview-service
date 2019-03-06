@@ -1,0 +1,12 @@
+config:
+  target: 'https://artillery.io'  # target site
+  phases:
+    - duration: 60 # time in seconds
+      arrivalRate: 20 # how many are made each seconds
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567' # header that is sent with each request
+scenarios: # different flows through the website
+  - flow:
+    - get:  # type of request
+        url: "/docs"

@@ -49,7 +49,7 @@ app.post('/productinfo', (req, res) => {
 app.put('/productinfo/:ID', (req, res) => {
   let id = req.params.ID;
   console.log(req.body);
-  item = req.body;
+  let item = req.body;
   // res.status(200).send('great work!');
   database.updateItem(id, item)
     .then(data => {

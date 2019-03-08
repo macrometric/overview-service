@@ -1,0 +1,19 @@
+config:
+  target: 'http://localhost:3030'  # target site
+  http:
+    pool: 20 # all http requests will be sent over these 10 connections
+  phases:
+    # - duration: 10 # time in seconds
+    #   arrivalRate: 10
+    #   rampTo: 10
+    - duration: 60 # time in seconds
+      arrivalRate: 100
+  defaults:
+    headers:
+      # x-my-service-auth: '987401838271002188298567' # header that is sent with each request
+scenarios: # different flows through the website
+  - flow:
+    - loop: 
+      - get:  # type of request
+          url: "/random"
+      count: 100
